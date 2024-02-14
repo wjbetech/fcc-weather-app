@@ -5,6 +5,7 @@ import React from "react"
 // components
 import { NavBar } from "@/components/NavBar"
 import Container from "@/components/Container";
+import WeatherIcon from "@/components/WeatherIcon";
 
 // libraries
 import axios from "axios";
@@ -79,7 +80,7 @@ interface CityInfo {
 
 export default function Page() {
   const { isLoading, error, data } = useQuery<WeatherData>("repoData", async () => {
-    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=seoul&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&cnt=56`);
+    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=seoul&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&cnt=12`);
     return data;
   });
 
@@ -112,14 +113,14 @@ export default function Page() {
             </h2>
 
             {/* parse the temp info for today */}
-            <Container className="gap-10 px-6 items-center">
-              <div className="flex flex-col px-4 justify-center text-center py-8">
+            <Container className="gap-12 px-12 items-center">
+              <div className="flex flex-col px-4 justify-center text-center space-y-2 py-4">
                 <span className="text-5xl m-auto mb-4 text-gray-400">{oneDayData?.weather[0].main === "Clouds" && <FaCloud />}</span>
                 <h1 className="text-5xl pb-4">{convertTemp(oneDayData?.main?.temp ?? 0)}°</h1>
-                <p className="text-md space-x-1 whitespace-nowrap">
+                <p className="text-md space-x-1 whitespace-nowrap font-bold">
                   Feels Like: {convertTemp(oneDayData?.main?.feels_like ?? 0)}°
                 </p>
-                <p className="text-md space-x-1 whitespace-nowrap">
+                <p className="text-md space-x-1 whitespace-nowrap font-bold">
                   <span>↓{convertTemp(oneDayData?.main?.temp_min ?? 0)}°</span>
                   {"  "}
                   <span>{convertTemp(oneDayData?.main?.temp_max ?? 0)}°↑</span>
@@ -127,23 +128,26 @@ export default function Page() {
               </div>
 
               {/* 3-hr updates */}
-              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between">
-                {data?.list.map((data, i) => (
+              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pb-8">
+                {data?.list.map((data, i) => {
+                  return (
 
-                  // each time slot
-                  <div key={i} className="flex flex-col justify-between gap-2 items-center text-[14px] font-semibold">
+                    // each time slot
+                    <div key={data.dt} className="flex flex-col justify-between gap-2 items-center text-[14px] px-4 font-semibold">
 
-                    {/* time */}
-                    <p className="whitespace-nowrap">
-                      {format(parseISO(data.dt_txt), "h:mm a")}
-                    </p>
+                      {/* time */}
+                      <p className="whitespace-nowrap">
+                        {format(parseISO(data.dt_txt), "h:mm a")}
+                      </p>
 
-                    {/* weather icon */}
-                    <p>
-                      
-                    </p>
-                  </div>
-                ))}
+                      {/* temp & weather icon */}
+                      <p className="text-xl text-center h-[125px]">
+                        <WeatherIcon iconName={data?.weather[0]?.main} />
+                        {convertTemp(data?.main.temp ?? 0)}°
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </Container>
           </div>
