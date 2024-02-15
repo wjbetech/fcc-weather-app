@@ -13,11 +13,9 @@ import { useQuery } from "react-query";
 import { format } from "date-fns/format";
 import { parseISO } from "date-fns";
 
-// icons
-import { FaCloud } from "react-icons/fa6";
-
 // utilities
 import { convertTemp } from "@/utils/convertTemp";
+import WeatherColor from "@/utils/DailyWeatherIcon";
 
 // types from data in chatgpt
 interface WeatherData {
@@ -88,6 +86,10 @@ export default function Page() {
 
   const oneDayData = data?.list[0];
 
+  const weatherColorFunc = WeatherColor();
+  const todayWeatherColor = weatherColorFunc(oneDayData?.weather[0]?.main)
+  console.log(todayWeatherColor);
+
   if (isLoading) return (
     <div className="flex items-center min-h-screen justify-center">
       <h1 className="text-3xl">Loading...</h1>
@@ -115,7 +117,9 @@ export default function Page() {
             {/* parse the temp info for today */}
             <Container className="gap-12 px-12 items-center">
               <div className="flex flex-col px-4 justify-center text-center space-y-2 py-4">
-                <span className="text-5xl m-auto mb-4 text-gray-400">{oneDayData?.weather[0].main === "Clouds" && <FaCloud />}</span>
+                <span className="m-auto mb-4 scale-[2]" style={{ color: todayWeatherColor }}>
+                  <WeatherIcon iconName={oneDayData?.weather[0]?.main} />
+                </span>
                 <h1 className="text-5xl pb-4">{convertTemp(oneDayData?.main?.temp ?? 0)}°</h1>
                 <p className="text-md space-x-1 whitespace-nowrap font-bold">
                   Feels Like: {convertTemp(oneDayData?.main?.feels_like ?? 0)}°
