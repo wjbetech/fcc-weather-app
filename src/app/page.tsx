@@ -15,7 +15,7 @@ import { parseISO } from "date-fns";
 
 // utilities
 import { convertTemp } from "@/utils/convertTemp";
-import WeatherColor from "@/utils/DailyWeatherIcon";
+import WeatherColor from "@/utils/DailyWeatherIconColor";
 
 // types from data in chatgpt
 interface WeatherData {
@@ -86,9 +86,7 @@ export default function Page() {
 
   const oneDayData = data?.list[0];
 
-  const weatherColorFunc = WeatherColor();
-  const todayWeatherColor = weatherColorFunc(oneDayData?.weather[0]?.main)
-  console.log(todayWeatherColor);
+  const weatherColor = WeatherColor(oneDayData?.weather[0]?.main);
 
   if (isLoading) return (
     <div className="flex items-center min-h-screen justify-center">
@@ -117,14 +115,14 @@ export default function Page() {
             {/* parse the temp info for today */}
             <Container className="gap-12 px-12 items-center">
               <div className="flex flex-col px-4 justify-center text-center space-y-2 py-4">
-                <span className="m-auto mb-4 scale-[2]" style={{ color: todayWeatherColor }}>
+                <span className="m-auto mb-4 scale-[2]" style={{ color: weatherColor }}>
                   <WeatherIcon iconName={oneDayData?.weather[0]?.main} />
                 </span>
                 <h1 className="text-5xl pb-4">{convertTemp(oneDayData?.main?.temp ?? 0)}°</h1>
                 <p className="text-md space-x-1 whitespace-nowrap font-bold">
                   Feels Like: {convertTemp(oneDayData?.main?.feels_like ?? 0)}°
                 </p>
-                <p className="text-md space-x-1 whitespace-nowrap font-bold">
+                <p className="text-md space-x-1 whitespace-nowrap font-bold text-gray-400">
                   <span>↓{convertTemp(oneDayData?.main?.temp_min ?? 0)}°</span>
                   {"  "}
                   <span>{convertTemp(oneDayData?.main?.temp_max ?? 0)}°↑</span>
@@ -158,7 +156,7 @@ export default function Page() {
         </section>
 
         {/* one-week data */}
-        <section className="px-10 space-y-4">
+        <section className="flex w-full flex-col px-10 space-y-4">
           <div className="space-y-2">
             <h2 className="flex gap-1 text-3xl items-end font-medium">One Week Outlook</h2>
           </div>
