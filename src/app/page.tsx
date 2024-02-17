@@ -16,8 +16,10 @@ import { parseISO } from "date-fns";
 // utilities
 import { convertTemp } from "@/utils/convertTemp";
 import WeatherColor from "@/utils/DailyWeatherIconColor";
+import ForecastWeatherDetails from "@/components/ForecastWeatherDetails";
 
 // types from data in chatgpt
+// try moving these types into a util file
 interface WeatherData {
   cod: string;
   message: number;
@@ -130,20 +132,20 @@ export default function Page() {
               </div>
 
               {/* 3-hr updates */}
-              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pb-8">
+              <div className="hr-scrollbar flex gap-2 sm:gap-4 overflow-x-auto w-full justify-between py-2">
                 {data?.list.map((data, i) => {
                   return (
 
                     // each time slot
-                    <div key={data.dt} className="flex flex-col justify-between gap-2 items-center text-[14px] px-4 font-semibold">
+                    <div key={data.dt} className="flex flex-col items-center text-[14px] py-8 mb-1 px-12 w-96 font-semibold bg-gray-100 rounded-md">
 
                       {/* time */}
-                      <p className="whitespace-nowrap">
+                      <p className="whitespace-nowrap text-lg">
                         {format(parseISO(data.dt_txt), "h:mm a")}
                       </p>
 
                       {/* temp & weather icon */}
-                      <p className="text-xl text-center h-[125px]">
+                      <p className="text-xl text-center">
                         <WeatherIcon iconName={data?.weather[0]?.main} />
                         {convertTemp(data?.main.temp ?? 0)}°
                       </p>
@@ -152,6 +154,16 @@ export default function Page() {
                 })}
               </div>
             </Container>
+            <div className="flex gap-4">
+              {/* left section */}
+              <Container className="h-[200px] w-[150px] p-10">
+                <h1 className="text-2xl font-bold capitalize items-center justify-center m-auto">{oneDayData?.weather[0]?.description}</h1>
+              </Container>
+              {/* right section */}
+              <Container className="h-[200px] p-10 font-semibold text-[18px]" style={{ backgroundColor: `${weatherColor}40` }}>
+                <ForecastWeatherDetails />
+              </Container>
+            </div>
           </div>
         </section>
 
@@ -160,7 +172,11 @@ export default function Page() {
           <div className="space-y-2">
             <h2 className="flex gap-1 text-3xl items-end font-medium">One Week Outlook</h2>
           </div>
-          <Container />
+          <div className="space-y-2">
+            <Container>
+              
+            </Container>
+          </div>
         </section>
       </main>
     </div>

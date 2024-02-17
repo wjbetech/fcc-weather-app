@@ -6,9 +6,9 @@ const WeatherColor = (weatherColor?: string) => {
       return "#f2d675";
     case "Rain":
     case "Drizzle":
-      return "#9ec2e6";
-    case "Thunderstorm":
       return "#3582c4";
+    case "Thunderstorm":
+      return "#0a4b78";
     case "Snow":
       return "#dcdcde";
     case "Atmosphere":
