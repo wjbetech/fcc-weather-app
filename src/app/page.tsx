@@ -14,9 +14,10 @@ import { format } from "date-fns/format";
 import { parseISO } from "date-fns";
 
 // utilities
-import { convertTemp } from "@/utils/convertTemp";
+import { convertTemp } from "@/utils/temperateConverter";
 import WeatherColor from "@/utils/DailyWeatherIconColor";
 import ForecastWeatherDetails from "@/components/ForecastWeatherDetails";
+import { metersToKilometers, humidityPercent, windSpeedInKms, airPressureBar } from "@/utils/weatherDataFormatter";
 
 // types from data in chatgpt
 // try moving these types into a util file
@@ -80,8 +81,17 @@ interface CityInfo {
 
 export default function Page() {
   const { isLoading, error, data } = useQuery<WeatherData>("repoData", async () => {
-    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=seoul&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&cnt=12`);
-    return data;
+    try {
+      const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=seoul&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&cnt=12`);
+  
+      
+      // Perform nullish check using optional chaining
+      if (data?.city?.sunrise) {
+        return data;
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch weather data");
+    }
   });
 
   console.log(data);
@@ -156,12 +166,19 @@ export default function Page() {
             </Container>
             <div className="flex gap-4">
               {/* left section */}
-              <Container className="h-[200px] w-[150px] p-10">
-                <h1 className="text-2xl font-bold capitalize items-center justify-center m-auto">{oneDayData?.weather[0]?.description}</h1>
+              <Container className="h-[200px] w-1/6 p-10">
+                <h1 className="text-xl font-bold capitalize items-center justify-center m-auto">{oneDayData?.weather[0]?.description}</h1>
               </Container>
               {/* right section */}
-              <Container className="h-[200px] p-10 font-semibold text-[18px]" style={{ backgroundColor: `${weatherColor}40` }}>
-                <ForecastWeatherDetails />
+              <Container className="h-[200px] font-semibold text-[18px] justify-evenly" style={{ backgroundColor: `${weatherColor}30` }}>
+                <ForecastWeatherDetails 
+                  visibility={metersToKilometers(oneDayData?.visibility ?? 10000)} 
+                  humidity={humidityPercent(oneDayData?.main?.humidity ?? 50)} 
+                  windSpeed={windSpeedInKms(oneDayData?.wind?.speed ?? 1.5)} 
+                  airPressure={airPressureBar(oneDayData?.main?.pressure ?? 1000)}
+                  sunrise={format(data?.city?.sunrise * 1000, "HH:mm") ?? "07:00"}
+                  sunset={format(data?.city?.sunset * 1000, "HH:mm") ?? "18:00"}
+                />
               </Container>
             </div>
           </div>

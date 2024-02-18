@@ -1,38 +1,47 @@
 import React from 'react'
 import { LuEye, LuGauge, LuSunrise, LuSunset, LuWaves, LuWind } from "react-icons/lu";
 
-export default function ForecastWeatherDetails() {
+export interface ForecastWeatherDetailsProps {
+    visibility?: string,
+    humidity?: string,
+    windSpeed?: string,
+    airPressure?: string,
+    sunrise?: string,
+    sunset?: string
+}
+
+export default function ForecastWeatherDetails(props: ForecastWeatherDetailsProps) {
   return (
     <>
         <SingleWeatherDetails 
             icon={<LuEye />}
             information="Visibility"
-            value=""
+            value={props.visibility}
         />
         <SingleWeatherDetails 
             icon={<LuWaves/>}
             information="Humidity"
-            value=""
+            value={props.humidity}
         />
         <SingleWeatherDetails 
             icon={<LuWind />}
             information="Wind Speed"
-            value=""
+            value={props.windSpeed}
         />
         <SingleWeatherDetails 
             icon={<LuGauge/>}
             information="Air Pressure"
-            value=""
+            value={props.airPressure}
         />
         <SingleWeatherDetails 
             icon={<LuSunrise/>}
             information="Sunrise"
-            value=""
+            value={props.sunrise}
         />
         <SingleWeatherDetails 
             icon={<LuSunset/>}
             information="Sunset"
-            value=""
+            value={props.sunset}
         />
     </>
   )
@@ -46,7 +55,7 @@ export interface SingleWeatherDetailsProps {
 
 function SingleWeatherDetails(props: SingleWeatherDetailsProps) {
     return (
-        <div className="flex flex-col justify-between gap-2 items-center text-[16px] font-semibold text-black/80">
+        <div className="flex flex-col justify-between items-center text-[18px] font-bold w-[15%] py-4 text-black/80">
             <p className="whitespace-nowrap">{props.information}</p>
             <div className="text-3xl">{props.icon}</div>
             <p>{props.value}</p>
