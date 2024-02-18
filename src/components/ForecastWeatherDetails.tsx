@@ -6,8 +6,8 @@ export interface ForecastWeatherDetailsProps {
     humidity?: string,
     windSpeed?: string,
     airPressure?: string,
-    sunrise?: string,
-    sunset?: string
+    sunrise?: string | number,
+    sunset?: string | number
 }
 
 export default function ForecastWeatherDetails(props: ForecastWeatherDetailsProps) {
@@ -50,7 +50,7 @@ export default function ForecastWeatherDetails(props: ForecastWeatherDetailsProp
 export interface SingleWeatherDetailsProps {
     information?: string,
     icon?: React.ReactNode;
-    value?: string;
+    value?: string | number;
 }
 
 function SingleWeatherDetails(props: SingleWeatherDetailsProps) {

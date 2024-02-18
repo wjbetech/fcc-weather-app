@@ -11,13 +11,14 @@ import WeatherIcon from "@/components/WeatherIcon";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { format } from "date-fns/format";
-import { parseISO } from "date-fns";
+import { fromUnixTime, parseISO } from "date-fns";
 
 // utilities
 import { convertTemp } from "@/utils/temperateConverter";
 import WeatherColor from "@/utils/DailyWeatherIconColor";
 import ForecastWeatherDetails from "@/components/ForecastWeatherDetails";
 import { metersToKilometers, humidityPercent, windSpeedInKms, airPressureBar } from "@/utils/weatherDataFormatter";
+import WeekForecastDetails from "@/components/WeekForecastDetails";
 
 // types from data in chatgpt
 // try moving these types into a util file
@@ -74,7 +75,7 @@ interface CityInfo {
   country: string;
   population: number;
   timezone: number;
-  sunrise: number;
+  sunrise: number | string;
   sunset: number;
 }
 
@@ -110,11 +111,11 @@ export default function Page() {
   return (
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen">
       <NavBar />
-      <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-6">
+      <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-6 space-y-2">
 
         {/* today data */}
-        <section className="px-10 space-y-4">
-          <div className="space-y-2">
+        <section className="px-10">
+          <div className="space-y-4">
 
             {/* parse today's day and date */}
             <h2 className="flex gap-4 text-3xl items-baseline font-medium">
@@ -165,10 +166,6 @@ export default function Page() {
               </div>
             </Container>
             <div className="flex gap-4">
-              {/* left section */}
-              <Container className="h-[200px] w-1/6 p-10">
-                <h1 className="text-xl font-bold capitalize items-center justify-center m-auto">{oneDayData?.weather[0]?.description}</h1>
-              </Container>
               {/* right section */}
               <Container className="h-[200px] font-semibold text-[18px] justify-evenly" style={{ backgroundColor: `${weatherColor}30` }}>
                 <ForecastWeatherDetails 
@@ -176,8 +173,8 @@ export default function Page() {
                   humidity={humidityPercent(oneDayData?.main?.humidity ?? 50)} 
                   windSpeed={windSpeedInKms(oneDayData?.wind?.speed ?? 1.5)} 
                   airPressure={airPressureBar(oneDayData?.main?.pressure ?? 1000)}
-                  sunrise={format(data?.city?.sunrise * 1000, "HH:mm") ?? "07:00"}
-                  sunset={format(data?.city?.sunset * 1000, "HH:mm") ?? "18:00"}
+                  sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+                  sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
                 />
               </Container>
             </div>
@@ -190,9 +187,16 @@ export default function Page() {
             <h2 className="flex gap-1 text-3xl items-end font-medium">One Week Outlook</h2>
           </div>
           <div className="space-y-2">
-            <Container>
-              
-            </Container>
+            <WeekForecastDetails 
+              weatherIcon={data?.list[1].weather[0].main}
+              day={format(parseISO(data?.list[1].dt_txt ?? ""), "EEEE")}
+            />
+            <WeekForecastDetails weatherIcon={data?.list[2].weather[0].main} />
+            <WeekForecastDetails weatherIcon={data?.list[3].weather[0].main} />
+            <WeekForecastDetails weatherIcon={data?.list[4].weather[0].main} />
+            <WeekForecastDetails weatherIcon={data?.list[5].weather[0].main} />
+            <WeekForecastDetails weatherIcon={data?.list[6].weather[0].main} />
+            <WeekForecastDetails weatherIcon={data?.list[7].weather[0].main} />
           </div>
         </section>
       </main>

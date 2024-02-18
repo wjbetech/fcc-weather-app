@@ -1,7 +1,7 @@
 import React from "react";
 import { WiCloud, WiDaySunny, WiRain, WiThunderstorm, WiSnow, WiFog } from "react-icons/wi";
 
-interface WeatherIconProps {
+export interface WeatherIconProps {
     iconName?: string;
 }
 
