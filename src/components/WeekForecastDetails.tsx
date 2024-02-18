@@ -28,7 +28,11 @@ export default function WeekForecastDetails(props: ForecastWeatherDetailsProps) 
   const weatherColor = WeatherColor(props.weatherIcon)
   return (
     <Container className="gap-4">
+      
+      {/* container left side: day info */}
       <section className="flex gap-4 items-center px-4">
+
+        {/* left side forecast & date */}
         <div className="">
           <span style={{ color: weatherColor }}>
             <WeatherIcon iconName={props.weatherIcon} />
@@ -36,6 +40,15 @@ export default function WeekForecastDetails(props: ForecastWeatherDetailsProps) 
           <p className="text-[16px] font-bold">{props.date}</p>
           <p className="text-[16px] font-bold">{props.day}</p>
         </div>
+        {/* right side weather data */}
+        <div className="flex flex-col px-4">
+          
+        </div>
+      </section>
+
+      {/* conditions */}
+      <section>
+
       </section>
     </Container>
   )

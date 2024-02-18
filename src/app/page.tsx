@@ -190,6 +190,7 @@ export default function Page() {
             <WeekForecastDetails 
               weatherIcon={data?.list[1].weather[0].main}
               day={format(parseISO(data?.list[1].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[1].dt_txt ?? ""), "dd MMM")}
             />
             <WeekForecastDetails weatherIcon={data?.list[2].weather[0].main} />
             <WeekForecastDetails weatherIcon={data?.list[3].weather[0].main} />
