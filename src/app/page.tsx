@@ -191,6 +191,10 @@ export default function Page() {
               weatherIcon={data?.list[1].weather[0].main}
               day={format(parseISO(data?.list[1].dt_txt ?? ""), "EEEE")}
               date={format(parseISO(data?.list[1].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[1]?.main?.temp}
+              visibility={metersToKilometers(data?.list[1].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[1]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[1]?.main?.temp_max ?? 0)} 
             />
             <WeekForecastDetails weatherIcon={data?.list[2].weather[0].main} />
             <WeekForecastDetails weatherIcon={data?.list[3].weather[0].main} />
