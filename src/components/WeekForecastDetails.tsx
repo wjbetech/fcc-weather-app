@@ -9,7 +9,6 @@ import { WeatherIconProps } from "./WeatherIcon"
 import { convertTemp } from "@/utils/temperateConverter"
 import WeatherColor from "@/utils/DailyWeatherIconColor"
 import ForecastWeatherDetails from "./ForecastWeatherDetails"
-import { metersToKilometers } from "@/utils/weatherDataFormatter"
 
 export interface ForecastWeatherDetailsProps extends WeatherIconProps {
   visibility?: string,
@@ -28,13 +27,23 @@ export interface ForecastWeatherDetailsProps extends WeatherIconProps {
   weatherIcon?: string,
 }
 
-export default function WeekForecastDetails(props: ForecastWeatherDetailsProps) {
+export default function WeekForecastDetails(
+  props: ForecastWeatherDetailsProps
+) {
+  const {
+    visibility,
+    humidity,
+    windSpeed,
+    airPressure,
+    sunrise,
+    sunset
+  } = props;
   const weatherColor = WeatherColor(props.weatherIcon)
   return (
-    <Container className="gap-4">
+    <Container className="gap-4 flex w-full h-[200px]">
       
       {/* container left side: day info */}
-      <section className="flex gap-4 items-center px-8">
+      <section className="flex gap-4 items-center px-4">
 
         {/* left side forecast & date */}
         <div className="flex flex-col px-4 items-center h-[50%] justify-between">
@@ -58,9 +67,9 @@ export default function WeekForecastDetails(props: ForecastWeatherDetailsProps) 
       </section>
 
       {/* conditions */}
-      <section>
-        <div className="flex flex-col px-4">
-
+      <section className="flex items-center">
+        <div className="flex gap-[3.75rem] h-40">
+            <ForecastWeatherDetails visibility={visibility} humidity={humidity} windSpeed={windSpeed} airPressure={airPressure} sunrise={sunrise} sunset={sunset}  />
         </div>
       </section>
     </Container>

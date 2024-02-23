@@ -81,6 +81,7 @@ interface CityInfo {
 
 
 export default function Page() {
+  
   const { isLoading, error, data } = useQuery<WeatherData>("repoData", async () => {
     try {
       const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=seoul&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&cnt=12`);
@@ -195,8 +196,26 @@ export default function Page() {
               visibility={metersToKilometers(data?.list[1].visibility ?? 0)}
               temp_min={convertTemp(data?.list[1]?.main?.temp_min ?? 0)} 
               temp_max={convertTemp(data?.list[1]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[1]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[1]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[1]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
             />
-            <WeekForecastDetails weatherIcon={data?.list[2].weather[0].main} />
+            <WeekForecastDetails 
+              weatherIcon={data?.list[2].weather[0].main}
+              day={format(parseISO(data?.list[2].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[2].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[2]?.main?.temp}
+              visibility={metersToKilometers(data?.list[2].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[2]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[2]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[2]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[2]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[2]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
+            />
             <WeekForecastDetails weatherIcon={data?.list[3].weather[0].main} />
             <WeekForecastDetails weatherIcon={data?.list[4].weather[0].main} />
             <WeekForecastDetails weatherIcon={data?.list[5].weather[0].main} />
