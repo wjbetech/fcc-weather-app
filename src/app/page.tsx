@@ -216,11 +216,76 @@ export default function Page() {
               sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
               sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
             />
-            <WeekForecastDetails weatherIcon={data?.list[3].weather[0].main} />
-            <WeekForecastDetails weatherIcon={data?.list[4].weather[0].main} />
-            <WeekForecastDetails weatherIcon={data?.list[5].weather[0].main} />
-            <WeekForecastDetails weatherIcon={data?.list[6].weather[0].main} />
-            <WeekForecastDetails weatherIcon={data?.list[7].weather[0].main} />
+            <WeekForecastDetails  
+              weatherIcon={data?.list[3].weather[0].main}
+              day={format(parseISO(data?.list[3].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[3].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[3]?.main?.temp}
+              visibility={metersToKilometers(data?.list[3].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[3]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[3]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[3]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[3]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[3]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
+            />
+            <WeekForecastDetails 
+              weatherIcon={data?.list[4].weather[0].main}
+              day={format(parseISO(data?.list[4].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[4].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[4]?.main?.temp}
+              visibility={metersToKilometers(data?.list[4].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[4]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[4]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[4]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[4]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[4]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
+            />
+            <WeekForecastDetails 
+              weatherIcon={data?.list[5].weather[0].main}
+              day={format(parseISO(data?.list[5].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[5].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[5]?.main?.temp}
+              visibility={metersToKilometers(data?.list[5].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[5]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[5]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[5]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[5]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[5]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
+            />
+            <WeekForecastDetails 
+              weatherIcon={data?.list[6].weather[0].main}
+              day={format(parseISO(data?.list[6].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[6].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[6]?.main?.temp}
+              visibility={metersToKilometers(data?.list[6].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[6]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[6]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[6]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[6]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[6]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
+            />
+            <WeekForecastDetails 
+              weatherIcon={data?.list[6].weather[0].main}
+              day={format(parseISO(data?.list[6].dt_txt ?? ""), "EEEE")}
+              date={format(parseISO(data?.list[6].dt_txt ?? ""), "dd MMM")}
+              temp={data?.list[6]?.main?.temp}
+              visibility={metersToKilometers(data?.list[6].visibility ?? 0)}
+              temp_min={convertTemp(data?.list[6]?.main?.temp_min ?? 0)} 
+              temp_max={convertTemp(data?.list[6]?.main?.temp_max ?? 0)} 
+              humidity={humidityPercent(data?.list[6]?.main?.humidity ?? 0)}
+              windSpeed={windSpeedInKms(data?.list[6]?.wind?.speed ?? 0)}
+              airPressure={airPressureBar(data?.list[6]?.main?.pressure ?? 0)}
+              sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
+              sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
+            />
           </div>
         </section>
       </main>

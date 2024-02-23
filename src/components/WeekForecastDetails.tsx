@@ -43,17 +43,17 @@ export default function WeekForecastDetails(
     <Container className="gap-4 flex w-full h-[200px]">
       
       {/* container left side: day info */}
-      <section className="flex gap-4 items-center px-4">
+      <section className="flex gap-4 items-center">
 
         {/* left side forecast & date */}
-        <div className="flex flex-col px-4 items-center h-[50%] justify-between">
+        <div className="flex flex-col items-center h-[50%] justify-between min-w-[175px] pl-6">
           <p className="font-bold text-[18px]">{props.day} {props.date}</p>
           <div style={{ color: weatherColor }} className="scale-[1.75]">
             <WeatherIcon iconName={props.weatherIcon} />
           </div>
         </div>
         {/* right side weather data */}
-        <div className="flex flex-col px-4 space-y-4 items-center">
+        <div className="flex flex-col space-y-4 items-center min-w-[150px]">
           <span className="text-5xl">{convertTemp(props.temp ?? 0)}°</span>
           <p className="text-md space-x-1 whitespace-nowrap font-bold">
             Feels Like: {props.feels_like}°
@@ -68,7 +68,7 @@ export default function WeekForecastDetails(
 
       {/* conditions */}
       <section className="flex items-center">
-        <div className="flex gap-[3.75rem] h-40">
+        <div className="flex gap-[3.85rem] h-40">
             <ForecastWeatherDetails visibility={visibility} humidity={humidity} windSpeed={windSpeed} airPressure={airPressure} sunrise={sunrise} sunset={sunset}  />
         </div>
       </section>
