@@ -8,6 +8,8 @@ export interface ForecastWeatherDetailsProps {
     airPressure?: string,
     sunrise?: string | number,
     sunset?: string | number
+    min_temp?: string,
+    max_temp?: string
 }
 
 export default function ForecastWeatherDetails(props: ForecastWeatherDetailsProps) {
