@@ -6,6 +6,8 @@ import React from "react"
 import { NavBar } from "@/components/NavBar"
 import Container from "@/components/Container";
 import WeatherIcon from "@/components/WeatherIcon";
+import ForecastWeatherDetails from "@/components/ForecastWeatherDetails";
+import WeekForecastDetails from "@/components/WeekForecastDetails";
 
 // libraries
 import axios from "axios";
@@ -16,9 +18,7 @@ import { fromUnixTime, parseISO } from "date-fns";
 // utilities
 import { convertTemp } from "@/utils/temperateConverter";
 import WeatherColor from "@/utils/dailyWeatherIconColor";
-import ForecastWeatherDetails from "@/components/ForecastWeatherDetails";
 import { metersToKilometers, humidityPercent, windSpeedInKms, airPressureBar } from "@/utils/weatherDataFormatter";
-import WeekForecastDetails from "@/components/WeekForecastDetails";
 import { TWeatherData } from "@/utils/weatherDataTypes";
 
 export default function Page() {
@@ -105,15 +105,12 @@ export default function Page() {
               <div className="hr-scrollbar flex gap-2 sm:gap-4 overflow-x-auto w-full justify-between py-2">
                 {data?.list.slice(0, 12).map((data, i) => {
                   return (
-
                     // each time slot
                     <div key={data.dt} className="flex flex-col items-center text-[14px] py-8 mb-1 px-12 w-96 font-semibold bg-gray-100 rounded-md">
-
                       {/* time */}
                       <p className="whitespace-nowrap text-lg">
                         {format(parseISO(data.dt_txt), "h:mm a")}
                       </p>
-
                       {/* temp & weather icon */}
                       <p className="text-xl text-center">
                         <WeatherIcon iconName={data?.weather[0]?.main} />
@@ -123,8 +120,8 @@ export default function Page() {
                   );
                 })}
               </div>
-
             </Container>
+
             <div className="flex gap-4">
               {/* right section */}
               <Container className="h-[200px] font-semibold text-[18px] justify-between" style={{ backgroundColor: `${weatherColor}30` }}>
@@ -161,6 +158,7 @@ export default function Page() {
                   airPressure={airPressureBar(day?.main?.pressure ?? 1000)}
                   temp_min={convertTemp(day?.main?.temp_min ?? 0)}
                   temp_max={convertTemp(day?.main?.temp_max ?? 0)}
+                  feels_like={convertTemp(day?.main?.feels_like ?? 0)}
                   sunrise={format(fromUnixTime(parseInt((data?.city?.sunrise ?? 0).toString(), 10)), "HH:mm")}
                   sunset={format(fromUnixTime(parseInt((data?.city?.sunset ?? 0).toString(), 10)), "HH:mm")}
                 />
