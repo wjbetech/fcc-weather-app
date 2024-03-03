@@ -65,7 +65,7 @@ export function NavBar() {
 
   return (
     <nav className="shadow-sm sticky top-0 left-0 z-50 bg-white px-10">
-        <div className="h-[80px] w-full flex justify-between items-center px-3">
+        <div className="h-[80px] w-full flex justify-between items-center px-3 mx-auto">
 
             {/* left side title and icon */}
             <div className="flex items-center justify-center gap-5">
@@ -87,12 +87,14 @@ export function NavBar() {
                   onSubmit={handleSubmit}
                   onChange={(e) => handleInputChange(e.target.value)}
                 />
-                <SuggestionsView 
-                  {...{showSuggestions,
-                    suggestions,
-                    handleSuggestionClick,
-                    error}}
-                />
+                <div className="relative">
+                  <SuggestionsView 
+                    {...{showSuggestions,
+                      suggestions,
+                      handleSuggestionClick,
+                      error}}
+                  />
+                </div>
             </section>
         </div>
     </nav>
@@ -111,8 +113,9 @@ const SuggestionsView = ({
   error: string;
 }) => {
   return (
-    <>{((showSuggestions && suggestions.length > 1) || error) && 
-      <ul className="mb-4 bg-white absolute border top-[61px] left-0 border-gray-300 rounded-md min-w-[230px] flex flex-col gap-1 py-2 px-2">
+    <>
+    {((showSuggestions && suggestions.length > 1) || error) && 
+      <ul className="mb-4 absolute top-[24px] right-[60px] bg-white border border-gray-300 rounded-md min-w-[230px] flex flex-col gap-1 py-2 px-2">
         {error && suggestions.length < 1 && <li className="text-red-500 p-1">{error}</li>}
         {suggestions.map((suggestion) => (
           // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
