@@ -57,7 +57,7 @@ export interface SingleWeatherDetailsProps {
 
 function SingleWeatherDetails(props: SingleWeatherDetailsProps) {
     return (
-        <div className="flex flex-col justify-between items-center font-bold w-[15%] py-4 text-black/70">
+        <div className="flex flex-col justify-between w-full items-center font-bold p-8 text-black/70">
             <p className="whitespace-nowrap">{props.information}</p>
             <div className="text-3xl">{props.icon}</div>
             <p>{props.value}</p>

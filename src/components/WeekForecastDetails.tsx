@@ -30,14 +30,6 @@ export interface ForecastWeatherDetailsProps extends WeatherIconProps {
 export default function WeekForecastDetails(
   props: ForecastWeatherDetailsProps
 ) {
-  const {
-    visibility,
-    humidity,
-    windSpeed,
-    airPressure,
-    sunrise,
-    sunset,
-  } = props;
   const weatherColor = WeatherColor(props.weatherIcon)
   return (
     <Container className="gap-4 flex w-full h-[200px]">
@@ -68,7 +60,7 @@ export default function WeekForecastDetails(
       </section>
 
       {/* conditions */}
-      <section className="flex items-center">
+      <section className="items-center overflow-x-auto overflow-y-hidden hidden sm:flex">
         <div className="flex gap-[3.7rem] h-40">
             <ForecastWeatherDetails {...props}  />
         </div>
